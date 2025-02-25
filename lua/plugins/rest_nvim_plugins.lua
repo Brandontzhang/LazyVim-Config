@@ -1,11 +1,14 @@
-vim.g.rest_nvim = {
-  result_split_in_place = true,
-  skip_ssl_verification = false,
-}
-
 return {
-  { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" },
   { "nvim-lua/plenary.nvim" },
-  { "rest-nvim/rest.nvim" },
+  {
+    "rest-nvim/rest.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      opts = function(_, opts)
+        opts.ensure_installed = opts.ensure_installed or {}
+        table.insert(opts.ensure_installed, "http")
+      end,
+    },
+  },
   { "git@github.com:ellisonleao/dotenv.nvim.git" },
 }
